@@ -29,7 +29,6 @@ public class MovieFeedAdapter extends RecyclerView.Adapter<MovieFeedAdapter.View
     private Context mContext;
 
     public MovieFeedAdapter(List<Movie> items, int rowLayout, Context mContext) {
-        Log.i(TAG,"MovieFeedAdapter Instatiated");
         this.items = items;
         this.rowLayout = rowLayout;
         this.mContext = mContext;
@@ -37,7 +36,6 @@ public class MovieFeedAdapter extends RecyclerView.Adapter<MovieFeedAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.i(TAG, "onCreateViewHolder");
         View v = LayoutInflater.from(parent.getContext()).inflate(rowLayout, parent, false);
         return new ViewHolder(v);
     }
@@ -45,10 +43,7 @@ public class MovieFeedAdapter extends RecyclerView.Adapter<MovieFeedAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Movie movie = items.get(position);
-//        Log.i(TAG, "onBindViewHolder: " + movie.getTitle());
-//        holder.movieTitle.setText(movie.getTitle());
         String moviePosterUrl = movie.getImages().getPoster().getMedium();
-        Log.i(TAG,"MoviePosterURL: " + moviePosterUrl);
         Picasso.with(mContext).load(moviePosterUrl).into(holder.posterImageView);
     }
 

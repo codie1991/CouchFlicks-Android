@@ -22,6 +22,7 @@ import java.util.Map;
 
 import nz.co.south45.couchflicks.R;
 import nz.co.south45.couchflicks.adapters.MovieFeedAdapter;
+import nz.co.south45.couchflicks.components.EndlessRecyclerOnScrollListener;
 import nz.co.south45.data.models.Movie;
 import nz.co.south45.data.models.TrendingResponse;
 import nz.co.south45.data.rest.TraktClient;
@@ -43,6 +44,7 @@ public class TrendingFragment extends Fragment {
 
     TraktClient traktClient;
     List<Movie> trendingMovies = new ArrayList<>();
+    Integer page=1;
 
     @Nullable
     @Override
@@ -60,6 +62,13 @@ public class TrendingFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getMovieFeedItems();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mAdapter.clear();
+        trendingMovies.clear();
     }
 
     private void setupRecyclerView() {
@@ -94,16 +103,16 @@ public class TrendingFragment extends Fragment {
                 refrershMovieFeedItems();
             }
         });
-//
-//
-//        RecyclerView.OnScrollListener mOnScroll = new EndlessRecyclerOnScrollListener(layoutManager) {
-//            @Override
-//            public void onLoadMore(int current_page) {
-//                loadMoreActivityFeedItems();
-//            }
-//        };
-//
-//        mRecyclerView.setOnScrollListener(mOnScroll);
+
+
+        RecyclerView.OnScrollListener mOnScroll = new EndlessRecyclerOnScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                loadMoreMovieFeedItems();
+            }
+        };
+
+        mRecyclerView.setOnScrollListener(mOnScroll);
     }
 
     private void loadFeed() {
@@ -115,12 +124,14 @@ public class TrendingFragment extends Fragment {
         }
         mAdapter.updateList(trendingMovies);
         mSwipeRefreshLayout.setRefreshing(false);
+        page++;
         Log.i(TAG, "Reload Feed Data");
     }
 
     private void getMovieFeedItems() {
         Map<String,Object> params = new HashMap<>();
         params.put("extended","full,images");
+        params.put("limit",15);
         Log.i(TAG, "GET FEED: params = " + params.toString());
 
         downloadFeed(params);
@@ -129,6 +140,7 @@ public class TrendingFragment extends Fragment {
     private void refrershMovieFeedItems() {
         Map<String,Object> params = new HashMap<>();
         params.put("extended","full,images");
+        params.put("limit",15);
         Log.i(TAG,"REFRESH:" + params.toString());
 
 
@@ -138,6 +150,8 @@ public class TrendingFragment extends Fragment {
     private void loadMoreMovieFeedItems() {
         Map<String,Object> params = new HashMap<>();
         params.put("extended","full,images");
+        params.put("page", page);
+        params.put("limit",15);
         Log.i(TAG,"LOAD MORE: params = " + params.toString());
 
         downloadFeed(params);

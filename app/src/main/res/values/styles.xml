@@ -7,7 +7,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
 
         <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/primary</item>

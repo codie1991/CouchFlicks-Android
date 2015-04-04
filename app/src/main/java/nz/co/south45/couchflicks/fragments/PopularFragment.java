@@ -21,6 +21,7 @@ import java.util.Map;
 
 import nz.co.south45.couchflicks.R;
 import nz.co.south45.couchflicks.adapters.MovieFeedAdapter;
+import nz.co.south45.couchflicks.components.EndlessRecyclerOnScrollListener;
 import nz.co.south45.data.models.Movie;
 import nz.co.south45.data.models.TrendingResponse;
 import nz.co.south45.data.rest.TraktClient;
@@ -42,6 +43,7 @@ public class PopularFragment extends Fragment {
 
     TraktClient traktClient;
     List<Movie> popularMovies = new ArrayList<>();
+    Integer page=1;
 
 
     @Nullable
@@ -60,6 +62,13 @@ public class PopularFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getMovieFeedItems();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mAdapter.clear();
+        popularMovies.clear();
     }
 
     private void setupRecyclerView() {
@@ -94,16 +103,15 @@ public class PopularFragment extends Fragment {
                 refrershMovieFeedItems();
             }
         });
-//
-//
-//        RecyclerView.OnScrollListener mOnScroll = new EndlessRecyclerOnScrollListener(layoutManager) {
-//            @Override
-//            public void onLoadMore(int current_page) {
-//                loadMoreActivityFeedItems();
-//            }
-//        };
-//
-//        mRecyclerView.setOnScrollListener(mOnScroll);
+
+        RecyclerView.OnScrollListener mOnScroll = new EndlessRecyclerOnScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                loadMoreMovieFeedItems();
+            }
+        };
+
+        mRecyclerView.setOnScrollListener(mOnScroll);
     }
 
     private void loadFeed() {
@@ -115,6 +123,7 @@ public class PopularFragment extends Fragment {
         }
         mAdapter.updateList(popularMovies);
         mSwipeRefreshLayout.setRefreshing(false);
+        page++;
         Log.i(TAG, "Reload Feed Data");
     }
 
@@ -138,6 +147,8 @@ public class PopularFragment extends Fragment {
     private void loadMoreMovieFeedItems() {
         Map<String,Object> params = new HashMap<>();
         params.put("extended","full,images");
+        params.put("page",page);
+        params.put("limit", 10);
         Log.i(TAG,"LOAD MORE: params = " + params.toString());
 
         downloadFeed(params);
@@ -148,7 +159,7 @@ public class PopularFragment extends Fragment {
             @Override
             public void success(ArrayList<Movie> popularResponses, Response response) {
                 popularMovies.addAll(popularResponses);
-                Log.i(TAG,"SUCCESS");
+                Log.i(TAG, "SUCCESS");
                 loadFeed();
             }
 
