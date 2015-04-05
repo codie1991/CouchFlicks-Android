@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.FilterInputStream;
 import java.io.IOException;
 
-import nz.co.south45.data.Constants;
+import nz.co.south45.data.LocalConstants;
 import nz.co.south45.data.Utils;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -60,7 +60,7 @@ public class TraktClient {
                     public void intercept(RequestFacade request) {
                         // Setup Trakt API detail headers
                         request.addHeader("Content-type","application/json");
-                        request.addHeader("trakt-api-key", Constants.API_KEY);
+                        request.addHeader("trakt-api-key", LocalConstants.API_KEY);
                         request.addHeader("trakt-api-version","2");
                         // Cache
 //                        if (Utils.isOnline()) {

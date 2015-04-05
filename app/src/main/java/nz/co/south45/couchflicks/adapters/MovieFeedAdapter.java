@@ -1,6 +1,8 @@
 package nz.co.south45.couchflicks.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nz.co.south45.couchflicks.R;
-import nz.co.south45.couchflicks.components.PosterImageView;
+import nz.co.south45.couchflicks.activities.MovieDetailActivity;
+import nz.co.south45.data.Constants;
 import nz.co.south45.data.models.Movie;
 
 /**
@@ -44,6 +47,7 @@ public class MovieFeedAdapter extends RecyclerView.Adapter<MovieFeedAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         Movie movie = items.get(position);
         String moviePosterUrl = movie.getImages().getPoster().getMedium();
+        holder.movieId = movie.getIds().getTrakt();
         Picasso.with(mContext).load(moviePosterUrl).into(holder.posterImageView);
     }
 
@@ -71,14 +75,24 @@ public class MovieFeedAdapter extends RecyclerView.Adapter<MovieFeedAdapter.View
         items = new ArrayList<>();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView posterImageView;
         TextView movieTitle;
+        Integer movieId;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             posterImageView = (ImageView) itemView.findViewById(R.id.list_poster);
-//            movieTitle = (TextView) itemView.findViewById(R.id.list_title);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent i = new Intent(view.getContext(), MovieDetailActivity.class);
+            Bundle pkg = new Bundle();
+            pkg.putString(Constants.MOVIE_ID, movieId.toString());
+            i.putExtras(pkg);
+            view.getContext().startActivity(i);
         }
     }
 }
