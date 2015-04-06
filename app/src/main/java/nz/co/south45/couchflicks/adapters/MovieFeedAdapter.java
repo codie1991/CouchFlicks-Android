@@ -88,6 +88,7 @@ public class MovieFeedAdapter extends RecyclerView.Adapter<MovieFeedAdapter.View
 
         @Override
         public void onClick(View view) {
+            Log.i(TAG, "OnCLick movie item");
             Intent i = new Intent(view.getContext(), MovieDetailActivity.class);
             Bundle pkg = new Bundle();
             pkg.putString(Constants.MOVIE_ID, movieId.toString());

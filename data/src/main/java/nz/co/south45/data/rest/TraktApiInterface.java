@@ -22,5 +22,5 @@ public interface TraktApiInterface {
 
     @GET(MOVIES_POPULAR) void getPopularMovies(@QueryMap Map<String,Object> params, Callback<ArrayList<Movie>> popularResponseCallback);
 
-    @GET(MOVIE_DETAIL) void getMovieDetail(@Path("id") String id, Callback<Movie> movieCallback);
+    @GET(MOVIE_DETAIL) void getMovieDetail(@Path("id") String id, @QueryMap Map<String,Object> params, Callback<Movie> movieCallback);
 }

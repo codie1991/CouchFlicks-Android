@@ -4,41 +4,79 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/movie_tagline_section"
-        android:layout_below="@+id/backdrop_toolbar"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/accent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/backdrop_toolbar">
 
-        <nz.co.south45.couchflicks.components.PosterImageView
-            android:id="@+id/movie_poster"
-            android:layout_width="56dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/movie_placeholder"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/movie_tagline"
-            android:layout_toRightOf="@+id/movie_poster"
-            android:hint="Tagline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:layout_centerHorizontal="true"
-            style="@style/Base.TextAppearance.AppCompat.Caption"/>
+            <RelativeLayout
+                android:id="@+id/movie_tagline_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/accent">
 
-    </RelativeLayout>
+                <nz.co.south45.couchflicks.components.PosterImageView
+                    android:id="@+id/movie_poster"
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/movie_placeholder"/>
 
-    <TextView
-        android:id="@+id/movie_description"
-        android:layout_below="@id/movie_tagline_section"
-        android:hint="Description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        style="@style/Base.TextAppearance.AppCompat.Body1"/>
+                <TextView
+                    android:id="@+id/movie_tagline"
+                    android:layout_toRightOf="@+id/movie_poster"
+                    android:hint="Tagline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/white"
+                    style="@style/Base.TextAppearance.AppCompat.Caption"/>
 
+            </RelativeLayout>
 
+            <TextView
+                android:id="@+id/movie_description"
+                android:layout_below="@id/movie_tagline_section"
+                android:hint="Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                style="@style/Base.TextAppearance.AppCompat.Body1"/>
+
+            <TextView
+                android:id="@+id/movie_description2"
+                android:layout_below="@id/movie_description"
+                android:hint="Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                style="@style/Base.TextAppearance.AppCompat.Body1"/>
+
+            <TextView
+                android:id="@+id/movie_description3"
+                android:layout_below="@id/movie_description2"
+                android:hint="Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                style="@style/Base.TextAppearance.AppCompat.Body1"/>
+
+            <TextView
+                android:id="@+id/movie_description4"
+                android:layout_below="@id/movie_description3"
+                android:hint="Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                style="@style/Base.TextAppearance.AppCompat.Body1"/>
+
+            </RelativeLayout>
+
+        </ScrollView>
 
     <nz.co.south45.couchflicks.components.CollapsingTitleLayout
         android:id="@+id/backdrop_toolbar"
@@ -46,12 +84,14 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
         app:expandedTextSize="40dp"
-        app:expandedMargin="16dp">
+        app:expandedMargin="16dp"
+        android:background="@color/secondary_text">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/movie_toolbar"
             android:layout_height="?attr/actionBarSize"
-            android:layout_width="match_parent" />
+            android:layout_width="match_parent"
+            android:paddingTop="@dimen/tool_bar_top_padding"/>
 
     </nz.co.south45.couchflicks.components.CollapsingTitleLayout>
 
