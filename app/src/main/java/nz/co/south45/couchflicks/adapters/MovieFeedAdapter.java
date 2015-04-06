@@ -1,5 +1,6 @@
 package nz.co.south45.couchflicks.adapters;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,11 +32,15 @@ public class MovieFeedAdapter extends RecyclerView.Adapter<MovieFeedAdapter.View
     private List<Movie> items;
     private int rowLayout;
     private Context mContext;
+    private Fragment fragment;
+    private String TAB_ID;
 
-    public MovieFeedAdapter(List<Movie> items, int rowLayout, Context mContext) {
+    public MovieFeedAdapter(List<Movie> items, int rowLayout, Context mContext, Fragment fragment, String TAB_ID) {
         this.items = items;
         this.rowLayout = rowLayout;
         this.mContext = mContext;
+        this.fragment = fragment;
+        this.TAB_ID = TAB_ID;
     }
 
     @Override
@@ -48,7 +54,14 @@ public class MovieFeedAdapter extends RecyclerView.Adapter<MovieFeedAdapter.View
         Movie movie = items.get(position);
         String moviePosterUrl = movie.getImages().getPoster().getMedium();
         holder.movieId = movie.getIds().getTrakt();
-        Picasso.with(mContext).load(moviePosterUrl).into(holder.posterImageView);
+
+        if (TAB_ID.equals("TRENDING")){
+            Glide.with(fragment).load(moviePosterUrl).placeholder(R.drawable.movie_placeholder).into(holder.posterImageView);
+        } else {
+            Picasso.with(mContext).load(moviePosterUrl).placeholder(R.drawable.movie_placeholder).into(holder.posterImageView);
+        }
+
+
     }
 
     @Override

@@ -79,11 +79,12 @@ public class TrendingFragment extends Fragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         final Activity c = getActivity();
+        final Fragment f = this;
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mAdapter = new MovieFeedAdapter(trendingMovies, R.layout.item_movie_poster, c);
+                mAdapter = new MovieFeedAdapter(trendingMovies, R.layout.item_movie_poster, c, f, "TRENDING");
                 c.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

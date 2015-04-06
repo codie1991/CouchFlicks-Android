@@ -79,11 +79,12 @@ public class PopularFragment extends Fragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         final Activity c = getActivity();
+        final Fragment f = this;
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mAdapter = new MovieFeedAdapter(popularMovies, R.layout.item_movie_poster, c);
+                mAdapter = new MovieFeedAdapter(popularMovies, R.layout.item_movie_poster, c, f, "POPULAR");
                 c.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -165,8 +166,10 @@ public class PopularFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.i(TAG, "FAILURE: " + error.getResponse().getStatus());
-                Log.i(TAG, "FAILURE: " + error.getLocalizedMessage());
+                if (error != null) {
+                    Log.i(TAG, "FAILURE: " + error.getResponse().getStatus());
+                    Log.i(TAG, "FAILURE: " + error.getLocalizedMessage());
+                }
             }
         });
     }
